@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		630B17DC2D4BAB7800593C33 /* NetworkUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630B17DB2D4BAB7800593C33 /* NetworkUtil.swift */; };
+		630B17E12D4BAD2800593C33 /* NetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630B17DF2D4BAD2800593C33 /* NetworkAdapter.swift */; };
 		63939D922D4B5E7800C953CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63939D912D4B5E7800C953CC /* AppDelegate.swift */; };
 		63939D942D4B5E7800C953CC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63939D932D4B5E7800C953CC /* SceneDelegate.swift */; };
 		63939D962D4B5E7800C953CC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63939D952D4B5E7800C953CC /* ViewController.swift */; };
@@ -24,6 +26,7 @@
 		63939DC72D4B613C00C953CC /* consolebus-ios-sdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63939DC62D4B613C00C953CC /* consolebus-ios-sdk.swift */; };
 		63939DCA2D4B623400C953CC /* DeviceUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63939DC92D4B623400C953CC /* DeviceUtil.swift */; };
 		63939DCC2D4B6FC800C953CC /* LogUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63939DCB2D4B6FC800C953CC /* LogUtil.swift */; };
+		63939DCE2D4BAB5F00C953CC /* ProtoNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63939DCD2D4BAB5F00C953CC /* ProtoNetwork.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		630B17DB2D4BAB7800593C33 /* NetworkUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkUtil.swift; sourceTree = "<group>"; };
+		630B17DF2D4BAD2800593C33 /* NetworkAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkAdapter.swift; sourceTree = "<group>"; };
 		63939D8E2D4B5E7800C953CC /* ios-sdk-sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-sdk-sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63939D912D4B5E7800C953CC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63939D932D4B5E7800C953CC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +74,7 @@
 		63939DC62D4B613C00C953CC /* consolebus-ios-sdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "consolebus-ios-sdk.swift"; sourceTree = "<group>"; };
 		63939DC92D4B623400C953CC /* DeviceUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceUtil.swift; sourceTree = "<group>"; };
 		63939DCB2D4B6FC800C953CC /* LogUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogUtil.swift; sourceTree = "<group>"; };
+		63939DCD2D4BAB5F00C953CC /* ProtoNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtoNetwork.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +96,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		630B17DD2D4BAD2800593C33 /* adapters */ = {
+			isa = PBXGroup;
+			children = (
+				630B17DE2D4BAD2800593C33 /* network */,
+				630B17E02D4BAD2800593C33 /* log */,
+			);
+			path = adapters;
+			sourceTree = "<group>";
+		};
+		630B17DE2D4BAD2800593C33 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				630B17DF2D4BAD2800593C33 /* NetworkAdapter.swift */,
+			);
+			path = network;
+			sourceTree = "<group>";
+		};
+		630B17E02D4BAD2800593C33 /* log */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = log;
+			sourceTree = "<group>";
+		};
 		63939D852D4B5E7800C953CC = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				63939DC62D4B613C00C953CC /* consolebus-ios-sdk.swift */,
+				630B17DD2D4BAD2800593C33 /* adapters */,
 				63939DC82D4B623400C953CC /* utils */,
 				63939DC32D4B611900C953CC /* connectors */,
 				63939DBA2D4B608A00C953CC /* protocols */,
@@ -137,6 +168,7 @@
 		63939DBA2D4B608A00C953CC /* protocols */ = {
 			isa = PBXGroup;
 			children = (
+				63939DCD2D4BAB5F00C953CC /* ProtoNetwork.swift */,
 				63939DBB2D4B608A00C953CC /* ProtocolMessageFactory.swift */,
 				63939DBC2D4B608A00C953CC /* ProtoMessageBase.swift */,
 				63939DBD2D4B608A00C953CC /* ProtoConsole.swift */,
@@ -156,6 +188,7 @@
 		63939DC82D4B623400C953CC /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				630B17DB2D4BAB7800593C33 /* NetworkUtil.swift */,
 				63939DCB2D4B6FC800C953CC /* LogUtil.swift */,
 				63939DC92D4B623400C953CC /* DeviceUtil.swift */,
 			);
@@ -286,6 +319,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				630B17DC2D4BAB7800593C33 /* NetworkUtil.swift in Sources */,
 				63939DCC2D4B6FC800C953CC /* LogUtil.swift in Sources */,
 				63939DCA2D4B623400C953CC /* DeviceUtil.swift in Sources */,
 				63939DC12D4B608A00C953CC /* ProtoConsole.swift in Sources */,
@@ -293,6 +327,8 @@
 				63939DBF2D4B608A00C953CC /* ProtocolMessageFactory.swift in Sources */,
 				63939DC22D4B608A00C953CC /* ProtoDevice.swift in Sources */,
 				63939DC52D4B611900C953CC /* WebSocketConnector.swift in Sources */,
+				630B17E12D4BAD2800593C33 /* NetworkAdapter.swift in Sources */,
+				63939DCE2D4BAB5F00C953CC /* ProtoNetwork.swift in Sources */,
 				63939DC72D4B613C00C953CC /* consolebus-ios-sdk.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
