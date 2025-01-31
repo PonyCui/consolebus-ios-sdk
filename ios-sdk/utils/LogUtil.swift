@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public enum LogLevel: String {
     case debug = "debug"
@@ -16,7 +17,7 @@ public enum LogLevel: String {
     }
 }
 
-public typealias LogMessageBuilder = () -> String
+public typealias LogMessageBuilder = () -> Any
 
 public class LogUtil {
     private static var minimumLogLevel: LogLevel = .debug
@@ -32,6 +33,22 @@ public class LogUtil {
         return level.priority >= minimumLogLevel.priority
     }
     
+    private static func processLogContent(_ message: Any) -> (String, String) {
+        if let stringMessage = message as? String {
+            return (stringMessage, "text")
+        } else if let image = message as? UIImage, let imageData = image.pngData() {
+            let base64String = imageData.base64EncodedString()
+            return (base64String, "image")
+        } else {
+            if let jsonData = try? JSONSerialization.data(withJSONObject: message),
+               let jsonString = String(data: jsonData, encoding: .utf8) {
+                return (jsonString, "object")
+            } else {
+                return (String(describing: message), "object")
+            }
+        }
+    }
+    
     private static func log(tag: String, level: LogLevel, messageBuilder: @escaping LogMessageBuilder) {
         guard shouldLog(level) else { return }
         
@@ -40,9 +57,12 @@ public class LogUtil {
         let msgId = UUID().uuidString
         let createdAt = Int64(Date().timeIntervalSince1970 * 1000)
         
+        let (content, contentType) = processLogContent(message)
+        
         let consoleMessage = ProtoConsole(
             logTag: tag,
-            logContent: message,
+            logContent: content,
+            logContentType: contentType,
             logLevel: level.rawValue,
             deviceId: deviceId,
             msgId: msgId,

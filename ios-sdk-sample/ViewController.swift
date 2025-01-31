@@ -80,6 +80,9 @@ class ViewController: UIViewController {
                 return
             }
             if let data = data {
+                if let img = UIImage(data: data) {
+                    LogUtil.debug(tag: "sendAvatarRequest") { img }
+                }
                 print("Received image data of size: \(data.count) bytes")
             }
         }
@@ -125,6 +128,7 @@ class ViewController: UIViewController {
     
     @objc private func sendDebugLog() {
         LogUtil.debug(tag: "TestButton") { "用户点击了测试按钮" }
+        LogUtil.debug(tag: "TestButton") { ["tips": ["用户点击了测试按钮"]] }
     }
 
 }
