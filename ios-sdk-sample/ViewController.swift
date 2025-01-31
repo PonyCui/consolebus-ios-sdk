@@ -43,7 +43,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         cbSDK.start()
-        NetworkAdapter.register()
+        NetworkURLSessionAdapter.register()
+        PreferenceUserDefaultsAdapter.register()
         setupUI()
     }
     

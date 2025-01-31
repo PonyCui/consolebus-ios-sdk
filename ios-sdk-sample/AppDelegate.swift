@@ -9,12 +9,27 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+    
+    var timer: Timer?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        if UserDefaults.standard.string(forKey: "fooKey") == nil {
+            UserDefaults.standard.set("console-bus-test", forKey: "fooKey")
+        }
+        if UserDefaults.standard.dictionary(forKey: "barDict") == nil {
+            UserDefaults.standard.set(["a": "b", "c": "d"], forKey: "barDict")
+        }
+        // 启动定时器，每5秒更新一次 timerKey
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
+            let randomValue = Int.random(in: 1...1000)
+            UserDefaults.standard.set(randomValue, forKey: "timerKey")
+        }
         return true
+    }
+    
+    deinit {
+        timer?.invalidate()
+        timer = nil
     }
 
     // MARK: UISceneSession Lifecycle

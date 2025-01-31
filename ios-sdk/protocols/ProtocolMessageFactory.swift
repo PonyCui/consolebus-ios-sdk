@@ -11,6 +11,8 @@ public class ProtocolMessageFactory {
             return ProtoConsole.fromJSON(json)
         case "device":
             return ProtoDevice.fromJSON(json)
+        case "preference":
+            return ProtoPreference.fromJSON(json)
         default:
             return nil
         }

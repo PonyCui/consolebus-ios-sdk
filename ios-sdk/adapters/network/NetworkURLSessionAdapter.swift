@@ -1,6 +1,6 @@
 import Foundation
 
-public class NetworkAdapter: URLProtocol {
+public class NetworkURLSessionAdapter: URLProtocol {
     private static let uniqueIdKey = "NetworkAdapterUniqueId"
     
     public static func register() {
@@ -31,7 +31,7 @@ public class NetworkAdapter: URLProtocol {
         
         // 标记请求已被处理
         let mutableRequest = (request as NSURLRequest).mutableCopy() as! NSMutableURLRequest
-        URLProtocol.setProperty(uniqueId, forKey: NetworkAdapter.uniqueIdKey, in: mutableRequest)
+        URLProtocol.setProperty(uniqueId, forKey: NetworkURLSessionAdapter.uniqueIdKey, in: mutableRequest)
         
         // 发送请求信息
         NetworkUtil.onNetworkRequest(uniqueId: uniqueId, request: request)

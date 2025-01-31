@@ -33,6 +33,21 @@ public class ConsoleBusIOSSDK {
         connector = WebSocketConnector()
         connector?.onConnect = { [weak self] in
             self?.sendDeviceInfo()
+            self?.syncPreference()
+        }
+        connector?.onMessage = { [weak self] (msgString) in
+            if let msgUtf8Data = msgString.data(using: .utf8),
+               let msgObject = try? JSONSerialization.jsonObject(with: msgUtf8Data) as? [String: Any] {
+                let msg = ProtocolMessageFactory.fromJSON(msgObject)
+                if let msg, msg.deviceId != DeviceUtil.getDeviceId() {
+                    return
+                }
+                if let msg = msg as? ProtoPreference, msg.operation == "set" {
+                    self?.onPreferenceSet(msg)
+                } else if let msg = msg as? ProtoPreference, msg.operation == "sync" {
+                    self?.syncPreference()
+                }
+            }
         }
         connector?.connect(to: config.host, port: config.port)
     }
@@ -53,6 +68,15 @@ public class ConsoleBusIOSSDK {
         )
         
         connector?.send(message: deviceInfo.toJSONString() ?? "")
+    }
+    
+    private func syncPreference() {
+        PreferenceAdapter.currentPreferenceAdapter?.getAll()
+    }
+    
+    private func onPreferenceSet(_ message: ProtoPreference) {
+        PreferenceAdapter.currentPreferenceAdapter?.setValue(key: message.key,
+                                                             value: message.value)
     }
     
     public func stop() {
