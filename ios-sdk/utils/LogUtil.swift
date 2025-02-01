@@ -20,7 +20,9 @@ public enum LogLevel: String {
 public typealias LogMessageBuilder = () -> Any
 
 public class LogUtil {
+    public static var captureScreenWhenError = false
     private static var minimumLogLevel: LogLevel = .debug
+    
     private static var connector: WebSocketConnector? {
         return ConsoleBusIOSSDK.activeSDKInstance?.connector
     }
@@ -85,6 +87,27 @@ public class LogUtil {
     }
     
     public static func error(tag: String = "", message: @escaping LogMessageBuilder) {
+        if captureScreenWhenError {
+            debug(tag: tag) {
+                let scene = UIApplication.shared.connectedScenes
+                            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
+                let window = scene?.windows.first(where: { $0.isKeyWindow })
+                if let image = window?.consolebus_snapshot() {
+                    return image
+                }
+                return ""
+            }
+        }
         log(tag: tag, level: .error, messageBuilder: message)
+    }
+}
+
+extension UIView {
+    func consolebus_snapshot() -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.main.scale)
+        drawHierarchy(in: bounds, afterScreenUpdates: true)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
     }
 }

@@ -127,8 +127,10 @@ class ViewController: UIViewController {
     }
     
     @objc private func sendDebugLog() {
+        LogUtil.captureScreenWhenError = true
         LogUtil.debug(tag: "TestButton") { "用户点击了测试按钮" }
         LogUtil.debug(tag: "TestButton") { ["tips": ["用户点击了测试按钮"]] }
+        LogUtil.error(tag: "TestError") { "这是一条错误信息" }
     }
 
 }
