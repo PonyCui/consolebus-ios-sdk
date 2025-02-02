@@ -1,15 +1,21 @@
 import Foundation
 
 public class NetworkURLSessionAdapter: URLProtocol {
+    
+    private static let operationQueue = OperationQueue()
+    
     private static let uniqueIdKey = "NetworkAdapterUniqueId"
     
     public static func register() {
+        operationQueue.maxConcurrentOperationCount = 1
         URLProtocol.registerClass(self)
     }
     
     public static func unregister() {
         URLProtocol.unregisterClass(self)
     }
+    
+    private let uniqueId = UUID().uuidString
     
     public override class func canInit(with request: URLRequest) -> Bool {
         // 避免重复处理同一请求
@@ -26,15 +32,14 @@ public class NetworkURLSessionAdapter: URLProtocol {
     public override func startLoading() {
         guard client != nil else { return }
         
-        // 生成唯一标识符
-        let uniqueId = UUID().uuidString
-        
         // 标记请求已被处理
         let mutableRequest = (request as NSURLRequest).mutableCopy() as! NSMutableURLRequest
         URLProtocol.setProperty(uniqueId, forKey: NetworkURLSessionAdapter.uniqueIdKey, in: mutableRequest)
         
         // 发送请求信息
-        NetworkUtil.onNetworkRequest(uniqueId: uniqueId, request: request)
+        NetworkURLSessionAdapter.operationQueue.addOperation {
+            NetworkUtil.onNetworkRequest(uniqueId: self.uniqueId, request: self.request)
+        }
         
         // 创建新的 URLSession 发送请求
         let config = URLSessionConfiguration.default
@@ -46,6 +51,11 @@ public class NetworkURLSessionAdapter: URLProtocol {
             
             if let error = error {
                 self.client?.urlProtocol(self, didFailWithError: error)
+                NetworkURLSessionAdapter.operationQueue.addOperation {
+                    NetworkUtil.onNetworkError(uniqueId: self.uniqueId,
+                                               request: self.request,
+                                               error: error)
+                }
                 return
             }
             
@@ -56,7 +66,11 @@ public class NetworkURLSessionAdapter: URLProtocol {
             if let data = data {
                 self.client?.urlProtocol(self, didLoad: data)
                 // 发送响应信息
-                NetworkUtil.onNetworkResponse(uniqueId: uniqueId, response: response, data: data)
+                NetworkURLSessionAdapter.operationQueue.addOperation {
+                    NetworkUtil.onNetworkResponse(uniqueId: self.uniqueId,
+                                                  response: response,
+                                                  data: data)
+                }
             }
             
             self.client?.urlProtocolDidFinishLoading(self)
@@ -66,6 +80,8 @@ public class NetworkURLSessionAdapter: URLProtocol {
     }
     
     public override func stopLoading() {
-        // 停止加载时的处理
+        NetworkURLSessionAdapter.operationQueue.addOperation {
+            NetworkUtil.onNetworkCancel(uniqueId: self.uniqueId, request: self.request)
+        }
     }
 }

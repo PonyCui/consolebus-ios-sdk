@@ -11,8 +11,8 @@ import consolebus_ios_sdk
 class ViewController: UIViewController {
 
     let cbSDK = ConsoleBusIOSSDK(
-//        connectorConfig: WebSocketConnectorConfig(host: "localhost", port: 9090)
-        connectorConfig: LocalFileConnectorConfig(filename: nil)
+        connectorConfig: WebSocketConnectorConfig(host: "localhost", port: 9090)
+//        connectorConfig: LocalFileConnectorConfig(filename: nil)
     )
     
     private lazy var testButton: UIButton = {
@@ -43,6 +43,20 @@ class ViewController: UIViewController {
         return button
     }()
     
+    private lazy var failedButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("发送失败请求", for: .normal)
+        button.addTarget(self, action: #selector(sendFailedRequest), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var cancelButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("发送并取消请求", for: .normal)
+        button.addTarget(self, action: #selector(sendAndCancelRequest), for: .touchUpInside)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         LocalFileManager.cleanLogFiles(config: LocalFileManagerConfig())
@@ -57,10 +71,14 @@ class ViewController: UIViewController {
         view.addSubview(githubButton)
         view.addSubview(postButton)
         view.addSubview(avatarButton)
+        view.addSubview(failedButton)
+        view.addSubview(cancelButton)
         testButton.translatesAutoresizingMaskIntoConstraints = false
         githubButton.translatesAutoresizingMaskIntoConstraints = false
         postButton.translatesAutoresizingMaskIntoConstraints = false
         avatarButton.translatesAutoresizingMaskIntoConstraints = false
+        failedButton.translatesAutoresizingMaskIntoConstraints = false
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             testButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             testButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -72,7 +90,13 @@ class ViewController: UIViewController {
             postButton.topAnchor.constraint(equalTo: githubButton.bottomAnchor, constant: 20),
             
             avatarButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            avatarButton.topAnchor.constraint(equalTo: postButton.bottomAnchor, constant: 20)
+            avatarButton.topAnchor.constraint(equalTo: postButton.bottomAnchor, constant: 20),
+            
+            failedButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            failedButton.topAnchor.constraint(equalTo: avatarButton.bottomAnchor, constant: 20),
+            
+            cancelButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            cancelButton.topAnchor.constraint(equalTo: failedButton.bottomAnchor, constant: 20)
         ])
     }
     
@@ -135,6 +159,29 @@ class ViewController: UIViewController {
         LogUtil.debug(tag: "TestButton") { "用户点击了测试按钮" }
         LogUtil.debug(tag: "TestButton") { ["tips": ["用户点击了测试按钮"]] }
         LogUtil.error(tag: "TestError") { "这是一条错误信息" }
+    }
+    
+    @objc private func sendFailedRequest() {
+        let url = URL(string: "https://non-existent-domain-12345.com")!
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+        }
+        task.resume()
+    }
+    
+    @objc private func sendAndCancelRequest() {
+        let url = URL(string: "https://api.github.com/repos/torvalds/linux")!
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+        }
+        task.resume()
+        task.cancel()
     }
 
 }

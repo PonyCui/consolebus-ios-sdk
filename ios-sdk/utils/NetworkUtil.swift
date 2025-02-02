@@ -96,4 +96,54 @@ public class NetworkUtil {
         connector?.send(message: proto.toJSONString() ?? "")
         requestMap.removeValue(forKey: uniqueId)
     }
+    
+    public static func onNetworkCancel(uniqueId: String, request: URLRequest) {
+        guard let (requestTime, _) = requestMap[uniqueId] else {
+            return
+        }
+        
+        let proto = ProtoNetwork(
+            uniqueId: uniqueId,
+            deviceId: DeviceUtil.getDeviceId(),
+            msgId: UUID().uuidString,
+            createdAt: Int64(Date().timeIntervalSince1970 * 1000),
+            requestUri: request.url?.absoluteString ?? "",
+            requestHeaders: request.allHTTPHeaderFields ?? [:],
+            requestMethod: request.httpMethod ?? "GET",
+            requestBody: getRequestBody(from: request),
+            responseHeaders: [:],
+            responseStatusCode: -2,
+            responseBody: "Request cancelled",
+            requestTime: requestTime,
+            responseTime: Date()
+        )
+        
+        connector?.send(message: proto.toJSONString() ?? "")
+        requestMap.removeValue(forKey: uniqueId)
+    }
+    
+    public static func onNetworkError(uniqueId: String, request: URLRequest, error: Error) {
+        guard let (requestTime, _) = requestMap[uniqueId] else {
+            return
+        }
+        
+        let proto = ProtoNetwork(
+            uniqueId: uniqueId,
+            deviceId: DeviceUtil.getDeviceId(),
+            msgId: UUID().uuidString,
+            createdAt: Int64(Date().timeIntervalSince1970 * 1000),
+            requestUri: request.url?.absoluteString ?? "",
+            requestHeaders: request.allHTTPHeaderFields ?? [:],
+            requestMethod: request.httpMethod ?? "GET",
+            requestBody: getRequestBody(from: request),
+            responseHeaders: [:],
+            responseStatusCode: -1,
+            responseBody: error.localizedDescription,
+            requestTime: requestTime,
+            responseTime: Date()
+        )
+        
+        connector?.send(message: proto.toJSONString() ?? "")
+        requestMap.removeValue(forKey: uniqueId)
+    }
 }
