@@ -23,7 +23,7 @@ public class LogUtil {
     public static var captureScreenWhenError = false
     private static var minimumLogLevel: LogLevel = .debug
     
-    private static var connector: WebSocketConnector? {
+    private static var connector: MessageConnector? {
         return ConsoleBusIOSSDK.activeSDKInstance?.connector
     }
     

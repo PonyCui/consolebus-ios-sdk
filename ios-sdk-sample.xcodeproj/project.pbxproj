@@ -13,6 +13,9 @@
 		630B17E62D4C656000593C33 /* PreferenceUserDefaultsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630B17E52D4C656000593C33 /* PreferenceUserDefaultsAdapter.swift */; };
 		630B17E82D4C656500593C33 /* ProtoPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630B17E72D4C656500593C33 /* ProtoPreference.swift */; };
 		630B17EA2D4C6E1D00593C33 /* PreferenceAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630B17E92D4C6E1D00593C33 /* PreferenceAdapter.swift */; };
+		630B17ED2D4F4C4600593C33 /* LocalFileConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630B17EB2D4F4C4600593C33 /* LocalFileConnector.swift */; };
+		630B17EE2D4F4C4600593C33 /* MessageConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630B17EC2D4F4C4600593C33 /* MessageConnector.swift */; };
+		630B17F02D4F50F600593C33 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630B17EF2D4F50F600593C33 /* LocalFileManager.swift */; };
 		63939D922D4B5E7800C953CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63939D912D4B5E7800C953CC /* AppDelegate.swift */; };
 		63939D942D4B5E7800C953CC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63939D932D4B5E7800C953CC /* SceneDelegate.swift */; };
 		63939D962D4B5E7800C953CC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63939D952D4B5E7800C953CC /* ViewController.swift */; };
@@ -64,6 +67,9 @@
 		630B17E52D4C656000593C33 /* PreferenceUserDefaultsAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceUserDefaultsAdapter.swift; sourceTree = "<group>"; };
 		630B17E72D4C656500593C33 /* ProtoPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtoPreference.swift; sourceTree = "<group>"; };
 		630B17E92D4C6E1D00593C33 /* PreferenceAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceAdapter.swift; sourceTree = "<group>"; };
+		630B17EB2D4F4C4600593C33 /* LocalFileConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalFileConnector.swift; sourceTree = "<group>"; };
+		630B17EC2D4F4C4600593C33 /* MessageConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageConnector.swift; sourceTree = "<group>"; };
+		630B17EF2D4F50F600593C33 /* LocalFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
 		63939D8E2D4B5E7800C953CC /* ios-sdk-sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-sdk-sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63939D912D4B5E7800C953CC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63939D932D4B5E7800C953CC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -199,6 +205,8 @@
 		63939DC32D4B611900C953CC /* connectors */ = {
 			isa = PBXGroup;
 			children = (
+				630B17EB2D4F4C4600593C33 /* LocalFileConnector.swift */,
+				630B17EC2D4F4C4600593C33 /* MessageConnector.swift */,
 				63939DC42D4B611900C953CC /* WebSocketConnector.swift */,
 			);
 			path = connectors;
@@ -207,6 +215,7 @@
 		63939DC82D4B623400C953CC /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				630B17EF2D4F50F600593C33 /* LocalFileManager.swift */,
 				630B17E22D4C655C00593C33 /* PreferenceUtil.swift */,
 				630B17DB2D4BAB7800593C33 /* NetworkUtil.swift */,
 				63939DCB2D4B6FC800C953CC /* LogUtil.swift */,
@@ -347,7 +356,10 @@
 				630B17EA2D4C6E1D00593C33 /* PreferenceAdapter.swift in Sources */,
 				630B17E32D4C655C00593C33 /* PreferenceUtil.swift in Sources */,
 				63939DC02D4B608A00C953CC /* ProtoMessageBase.swift in Sources */,
+				630B17EE2D4F4C4600593C33 /* MessageConnector.swift in Sources */,
 				63939DBF2D4B608A00C953CC /* ProtocolMessageFactory.swift in Sources */,
+				630B17ED2D4F4C4600593C33 /* LocalFileConnector.swift in Sources */,
+				630B17F02D4F50F600593C33 /* LocalFileManager.swift in Sources */,
 				63939DC22D4B608A00C953CC /* ProtoDevice.swift in Sources */,
 				630B17E82D4C656500593C33 /* ProtoPreference.swift in Sources */,
 				63939DC52D4B611900C953CC /* WebSocketConnector.swift in Sources */,

@@ -2,7 +2,7 @@ import Foundation
 
 public class NetworkUtil {
     private static var requestMap: [String: (Date, URLRequest)] = [:]
-    private static var connector: WebSocketConnector? {
+    private static var connector: MessageConnector? {
         return ConsoleBusIOSSDK.activeSDKInstance?.connector
     }
     

@@ -1,6 +1,6 @@
 import Foundation
 
-public class WebSocketConnector: NSObject {
+public class WebSocketConnector: MessageConnector {
     private var webSocketTask: URLSessionWebSocketTask?
     private var isConnected: Bool = false
     private var shouldReconnect: Bool = false
@@ -13,13 +13,9 @@ public class WebSocketConnector: NSObject {
     public var onMessage: ((String) -> Void)?
     public var onConnect: (() -> Void)?
     public var onDisconnect: (() -> Void)?
-    public var onError: ((Error) -> Void)?
     
-    private var messageBuffer: [(message: String, timestamp: TimeInterval)] = []
-    private let maxBufferSize = 1000 // 最大缓冲消息数量
-    
-    public override init() {
-        super.init()
+    public init() {
+        super.init(maxBufferSize: 1000)
     }
     
     public func connect(to host: String, port: Int) {
@@ -68,7 +64,7 @@ public class WebSocketConnector: NSObject {
         }
     }
     
-    public func send(message: String) {
+    public override func send(message: String) {
         // 如果未连接，将消息存入缓冲区
         guard isConnected else {
             addToBuffer(message)
@@ -85,19 +81,14 @@ public class WebSocketConnector: NSObject {
         }
     }
     
-    private func addToBuffer(_ message: String) {
-        let timestamp = Date().timeIntervalSince1970
-        messageBuffer.append((message: message, timestamp: timestamp))
-        
-        // 如果缓冲区超出大小限制，移除最早的消息
-        if messageBuffer.count > maxBufferSize {
-            messageBuffer.removeFirst()
-        }
+    override func addToBuffer(_ message: String) {
+        super.addToBuffer(message)
+        handleBufferLimit()
     }
     
     private func replayBufferedMessages() {
         // 按时间戳排序消息
-        let sortedMessages = messageBuffer.sorted { $0.timestamp < $1.timestamp }
+        let sortedMessages = getSortedMessages()
         
         // 重发所有缓冲的消息
         for bufferedMessage in sortedMessages {

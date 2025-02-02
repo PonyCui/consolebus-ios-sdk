@@ -2,7 +2,7 @@ import Foundation
 
 public class PreferenceUtil {
     
-    private static var connector: WebSocketConnector? {
+    private static var connector: MessageConnector? {
         return ConsoleBusIOSSDK.activeSDKInstance?.connector
     }
     

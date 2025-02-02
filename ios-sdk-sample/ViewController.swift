@@ -10,7 +10,10 @@ import consolebus_ios_sdk
 
 class ViewController: UIViewController {
 
-    let cbSDK = ConsoleBusIOSSDK(config: ConsoleBusConfig(host: "localhost", port: 9090))
+    let cbSDK = ConsoleBusIOSSDK(
+//        connectorConfig: WebSocketConnectorConfig(host: "localhost", port: 9090)
+        connectorConfig: LocalFileConnectorConfig(filename: nil)
+    )
     
     private lazy var testButton: UIButton = {
         let button = UIButton(type: .system)
@@ -42,6 +45,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        LocalFileManager.cleanLogFiles(config: LocalFileManagerConfig())
         cbSDK.start()
         NetworkURLSessionAdapter.register()
         PreferenceUserDefaultsAdapter.register()

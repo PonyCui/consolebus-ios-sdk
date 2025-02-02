@@ -10,7 +10,7 @@ public class PreferenceUserDefaultsAdapter: PreferenceAdapter {
         PreferenceAdapter.currentPreferenceAdapter = nil
     }
     
-    private var connector: WebSocketConnector? {
+    private var connector: MessageConnector? {
         return ConsoleBusIOSSDK.activeSDKInstance?.connector
     }
     
