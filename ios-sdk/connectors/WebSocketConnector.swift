@@ -80,6 +80,15 @@ public class WebSocketConnector: MessageConnector {
             }
         }
     }
+
+    public func sendMessage(_ message: ProtoMessageBase) {
+        if let jsonString = message.toJSONString() {
+            send(message: jsonString)
+        } else {
+            print("Error: Could not serialize ProtoMessageBase to JSON string")
+            // Optionally, handle the error, e.g., by sending an error message back or logging
+        }
+    }
     
     override func addToBuffer(_ message: String) {
         super.addToBuffer(message)

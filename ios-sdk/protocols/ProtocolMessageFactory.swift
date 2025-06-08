@@ -13,6 +13,8 @@ public class ProtocolMessageFactory {
             return ProtoDevice.fromJSON(json)
         case "preference":
             return ProtoPreference.fromJSON(json)
+        case "filesystem":
+            return ProtoFilesystem.fromJSON(json)
         default:
             return nil
         }

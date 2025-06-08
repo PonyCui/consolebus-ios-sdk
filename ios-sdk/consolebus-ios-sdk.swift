@@ -37,6 +37,7 @@ public class ConsoleBusIOSSDK {
     
     let connectorConfig: ConnectorConfig
     var connector: MessageConnector?
+    private var featureHandlers: [String: FeatureHandler] = [:]
     
     public init(connectorConfig: ConnectorConfig) {
         self.connectorConfig = connectorConfig
@@ -44,6 +45,7 @@ public class ConsoleBusIOSSDK {
     
     public func start() {
         ConsoleBusIOSSDK.activeSDKInstance = self
+        self.registerInitialFeatureHandlers()
         
         if let wsConfig = connectorConfig as? WebSocketConnectorConfig {
             let wsConnector = WebSocketConnector()
@@ -62,6 +64,10 @@ public class ConsoleBusIOSSDK {
                         self?.onPreferenceSet(msg)
                     } else if let msg = msg as? ProtoPreference, msg.operation == "sync" {
                         self?.syncPreference()
+                    } else if let msg, let handler = self?.featureHandlers[msg.featureId] {
+                        handler.handleMessage(msg, from: self!.connector!)
+                    } else {
+                        print("No handler registered for featureId: \(msg?.featureId)")
                     }
                 }
             }
@@ -102,6 +108,20 @@ public class ConsoleBusIOSSDK {
     private func onPreferenceSet(_ message: ProtoPreference) {
         PreferenceAdapter.currentPreferenceAdapter?.setValue(key: message.key,
                                                              value: message.value)
+    }
+    
+    public func registerFeatureHandler(handler: FeatureHandler) {
+        featureHandlers[handler.featureIdentifier()] = handler
+        print("Registered feature handler for: \(handler.featureIdentifier())")
+    }
+
+    private func registerInitialFeatureHandlers() {
+        // Register core feature handlers here if any, or allow them to be registered externally.
+        // For now, FilesystemFeatureHandler will be registered after SDK initialization as an example.
+        // If you have handlers that should always be present, register them here.
+        // Example: registerFeatureHandler(handler: SomeCoreFeatureHandler())
+        let fsHandler = FilesystemFeatureHandler()
+        registerFeatureHandler(handler: fsHandler)
     }
     
     public func stop() {

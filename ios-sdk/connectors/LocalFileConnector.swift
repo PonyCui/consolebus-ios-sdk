@@ -94,6 +94,15 @@ public class LocalFileConnector: MessageConnector {
             }
         }
     }
+
+    public func sendMessage(_ message: ProtoMessageBase) {
+        if let jsonString = message.toJSONString() {
+            send(message: jsonString)
+        } else {
+            print("Error: Could not serialize ProtoMessageBase to JSON string")
+            // Optionally, handle the error, e.g., by sending an error message back or logging
+        }
+    }
     
     public override func stop() {
         stopFlushTimer()

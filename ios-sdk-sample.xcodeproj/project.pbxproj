@@ -16,6 +16,9 @@
 		630B17ED2D4F4C4600593C33 /* LocalFileConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630B17EB2D4F4C4600593C33 /* LocalFileConnector.swift */; };
 		630B17EE2D4F4C4600593C33 /* MessageConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630B17EC2D4F4C4600593C33 /* MessageConnector.swift */; };
 		630B17F02D4F50F600593C33 /* LocalFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630B17EF2D4F50F600593C33 /* LocalFileManager.swift */; };
+		630CF6D52DEC60EA00848FDF /* FeatureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CF6D12DEC60CE00848FDF /* FeatureHandler.swift */; };
+		630CF6D62DEC60EA00848FDF /* FilesystemFeatureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CF6D22DEC60CE00848FDF /* FilesystemFeatureHandler.swift */; };
+		630CF6D72DEC60EF00848FDF /* ProtoFilesystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630CF6CE2DEC60C000848FDF /* ProtoFilesystem.swift */; };
 		63939D922D4B5E7800C953CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63939D912D4B5E7800C953CC /* AppDelegate.swift */; };
 		63939D942D4B5E7800C953CC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63939D932D4B5E7800C953CC /* SceneDelegate.swift */; };
 		63939D962D4B5E7800C953CC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63939D952D4B5E7800C953CC /* ViewController.swift */; };
@@ -70,6 +73,9 @@
 		630B17EB2D4F4C4600593C33 /* LocalFileConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalFileConnector.swift; sourceTree = "<group>"; };
 		630B17EC2D4F4C4600593C33 /* MessageConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageConnector.swift; sourceTree = "<group>"; };
 		630B17EF2D4F50F600593C33 /* LocalFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalFileManager.swift; sourceTree = "<group>"; };
+		630CF6CE2DEC60C000848FDF /* ProtoFilesystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtoFilesystem.swift; sourceTree = "<group>"; };
+		630CF6D12DEC60CE00848FDF /* FeatureHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureHandler.swift; sourceTree = "<group>"; };
+		630CF6D22DEC60CE00848FDF /* FilesystemFeatureHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesystemFeatureHandler.swift; sourceTree = "<group>"; };
 		63939D8E2D4B5E7800C953CC /* ios-sdk-sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-sdk-sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63939D912D4B5E7800C953CC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63939D932D4B5E7800C953CC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -144,6 +150,15 @@
 			path = perference;
 			sourceTree = "<group>";
 		};
+		630CF6D02DEC60CE00848FDF /* features */ = {
+			isa = PBXGroup;
+			children = (
+				630CF6D12DEC60CE00848FDF /* FeatureHandler.swift */,
+				630CF6D22DEC60CE00848FDF /* FilesystemFeatureHandler.swift */,
+			);
+			path = features;
+			sourceTree = "<group>";
+		};
 		63939D852D4B5E7800C953CC = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +194,7 @@
 		63939DAB2D4B5EA600C953CC /* ios-sdk */ = {
 			isa = PBXGroup;
 			children = (
+				630CF6D02DEC60CE00848FDF /* features */,
 				63939DC62D4B613C00C953CC /* consolebus-ios-sdk.swift */,
 				630B17DD2D4BAD2800593C33 /* adapters */,
 				63939DC82D4B623400C953CC /* utils */,
@@ -192,6 +208,7 @@
 		63939DBA2D4B608A00C953CC /* protocols */ = {
 			isa = PBXGroup;
 			children = (
+				630CF6CE2DEC60C000848FDF /* ProtoFilesystem.swift */,
 				630B17E72D4C656500593C33 /* ProtoPreference.swift */,
 				63939DCD2D4BAB5F00C953CC /* ProtoNetwork.swift */,
 				63939DBB2D4B608A00C953CC /* ProtocolMessageFactory.swift */,
@@ -350,11 +367,14 @@
 			files = (
 				630B17DC2D4BAB7800593C33 /* NetworkUtil.swift in Sources */,
 				630B17E62D4C656000593C33 /* PreferenceUserDefaultsAdapter.swift in Sources */,
+				630CF6D52DEC60EA00848FDF /* FeatureHandler.swift in Sources */,
 				63939DCC2D4B6FC800C953CC /* LogUtil.swift in Sources */,
 				63939DCA2D4B623400C953CC /* DeviceUtil.swift in Sources */,
 				63939DC12D4B608A00C953CC /* ProtoConsole.swift in Sources */,
 				630B17EA2D4C6E1D00593C33 /* PreferenceAdapter.swift in Sources */,
 				630B17E32D4C655C00593C33 /* PreferenceUtil.swift in Sources */,
+				630CF6D72DEC60EF00848FDF /* ProtoFilesystem.swift in Sources */,
+				630CF6D62DEC60EA00848FDF /* FilesystemFeatureHandler.swift in Sources */,
 				63939DC02D4B608A00C953CC /* ProtoMessageBase.swift in Sources */,
 				630B17EE2D4F4C4600593C33 /* MessageConnector.swift in Sources */,
 				63939DBF2D4B608A00C953CC /* ProtocolMessageFactory.swift in Sources */,
